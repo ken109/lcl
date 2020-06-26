@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/ken109/lcl/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"lcl/util"
 	"os"
 )
 
