@@ -38,7 +38,7 @@ func initConfig() {
 	if cfgFile != "" {
 		viper.SetConfigFile(cfgFile)
 	} else {
-		viper.SetConfigFile(brewPrefix + "/etc/lcl/config.yaml")
+		viper.SetConfigFile(brewPrefix + "/etc/lcl/config.yml")
 	}
 
 	viper.AutomaticEnv()
