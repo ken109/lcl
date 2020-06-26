@@ -1,4 +1,4 @@
-module lcl
+module github.com/ken109/lcl
 
 go 1.14
 
