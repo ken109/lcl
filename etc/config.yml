@@ -1,0 +1,11 @@
+mysql:
+  user: root
+  password: password
+option:
+  start:
+    empty-only: true
+    share: false
+  stop:
+    drop-db: false
+  staging:
+    ssh: a01

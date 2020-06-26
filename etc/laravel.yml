@@ -1,0 +1,23 @@
+version: '3'
+services:
+  APP_NAME:
+    image: ken109/laravel
+    restart: always
+    container_name: APP_NAME
+    expose:
+      - '80'
+    environment:
+      VIRTUAL_HOST: HOST_NAME
+      LARAVEL_NAME: APP_NAME
+      LARAVEL_ENV: local
+      LARAVEL_DB_HOST: host.docker.internal
+      LARAVEL_DB_USER: sha2
+      LARAVEL_DB_PASSWORD: password
+      LARAVEL_DB_NAME: APP_NAME
+    volumes:
+      - .:/var/www/html
+
+networks:
+  default:
+    external:
+      name: develop

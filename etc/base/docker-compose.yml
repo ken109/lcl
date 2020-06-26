@@ -1,0 +1,63 @@
+version: '3'
+services:
+  dns:
+    image: ken109/dns
+    container_name: dns
+    ports:
+      - '53:53/udp'
+    volumes:
+      - ./hosts.txt:/usr/src/app/hosts.txt
+      - ./resolver.txt:/usr/src/app/resolver.txt
+    restart: always
+  
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./proxy:/etc/nginx/vhost.d
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+
+  mysql:
+    image: mysql
+    container_name: mysql
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+      - mysql/:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    restart: always
+
+  mysql5:
+    image: mysql:5
+    container_name: mysql5
+    ports:
+      - '33065:3306'
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+      - mysql5/:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    restart: always
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - '6379:6379'
+    restart: always
+
+networks:
+  default:
+    external:
+      name: develop
+
+volumes:
+  mysql:
+    external: true
+  mysql5:
+    external: true
