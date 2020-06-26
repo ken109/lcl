@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"github.com/fatih/color"
+	"github.com/ken109/lcl/util"
 	"github.com/spf13/cobra"
-	"lcl/util"
 	"os/exec"
 )
 
