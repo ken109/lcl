@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"database/sql"
-	"errors"
 	"fmt"
 	"github.com/fatih/color"
 	_ "github.com/go-sql-driver/mysql"
@@ -16,47 +15,39 @@ import (
 	"strings"
 )
 
-var startCmd = &cobra.Command{
-	Use:   "start [project name]",
-	Short: "Start environment",
-	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) < 1 {
-			return errors.New("requires a project name argument")
-		}
-		return nil
-	},
-	Run: func(cmd *cobra.Command, args []string) {
-		var host string
-		if emptyOnly, err := cmd.PersistentFlags().GetBool("empty-only"); err == nil {
-			EmptyCheck(emptyOnly)
-		} else {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		if share, err := cmd.PersistentFlags().GetBool("share"); err == nil {
-			color.Green("Copying docker-compose.yml...")
-			host = CopyCompose(brewPrefix+"/etc/lcl/"+cmd.Parent().Name()+".yml", args[0], share)
-		}
-		color.Green("Creating database...")
-		CreateDB(args[0], config.Mysql.User, config.Mysql.Password)
+var emptyOnly bool
+var share bool
 
-		color.Green("Starting...")
-		ComposeUp()
-		color.Blue("URL: http://" + host)
-		color.Green("Completed.")
+var startCmd = &cobra.Command{
+	Use:   "start",
+	Short: "Start environment",
+	Run: func(cmd *cobra.Command, args []string) {
+		cmd.Help()
 	},
 }
 
 func init() {
-	wordpressCmd.AddCommand(startCmd)
-	laravelCmd.AddCommand(startCmd)
-	djangoCmd.AddCommand(startCmd)
+	rootCmd.AddCommand(startCmd)
 
-	startCmd.PersistentFlags().Bool("empty-only", config.Option.Start.EmptyOnly, "Stop processing if the current directory is not empty")
-	startCmd.PersistentFlags().Bool("share", config.Option.Start.Share, "Share in the office")
+	startCmd.PersistentFlags().BoolVar(&emptyOnly, "empty-only", config.Option.Start.EmptyOnly, "Stop processing if the current directory is not empty")
+	startCmd.PersistentFlags().BoolVar(&share, "share", config.Option.Start.Share, "Share in the office")
 }
 
-func EmptyCheck(emptyOnly bool) {
+func start(framework string, project string) {
+	var host string
+	emptyCheck(emptyOnly)
+	color.Green("Copying docker-compose.yml...")
+	host = copyCompose(brewPrefix+"/etc/lcl/"+framework+".yml", project, share)
+	color.Green("Creating database...")
+	createDB(project, config.Mysql.User, config.Mysql.Password)
+
+	color.Green("Starting...")
+	composeUp()
+	color.Blue("URL: http://" + host)
+	color.Green("Completed.")
+}
+
+func emptyCheck(emptyOnly bool) {
 	var fileCount = 0
 	filepath.Walk("./", func(path string, info os.FileInfo, err error) error {
 		fileCount++
@@ -69,7 +60,7 @@ func EmptyCheck(emptyOnly bool) {
 	}
 }
 
-func CopyCompose(path string, project string, share bool) string {
+func copyCompose(path string, project string, share bool) string {
 	ft, err := os.Open(path)
 	if err != nil {
 		color.Red("Could not read " + path)
@@ -111,7 +102,7 @@ func CopyCompose(path string, project string, share bool) string {
 	return host
 }
 
-func CreateDB(project string, user string, password string) {
+func createDB(project string, user string, password string) {
 	db, err := sql.Open("mysql", user+":"+password+"@tcp(127.0.0.1:3306)/")
 	if err != nil {
 		panic(err.Error())
@@ -124,7 +115,7 @@ func CreateDB(project string, user string, password string) {
 	}
 }
 
-func ComposeUp() {
+func composeUp() {
 	err := exec.Command("docker-compose", "up", "-d", "--remove-orphans").Run()
 	if err != nil {
 		color.Red("Could not start docker-compose")
