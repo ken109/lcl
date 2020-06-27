@@ -17,7 +17,7 @@ var stopCmd = &cobra.Command{
 	Short: "Stop environment",
 	Run: func(cmd *cobra.Command, args []string) {
 		project := GetProjectName()
-		color.Green("Stopping...")
+		color.Green(" Stopping " + project + "...")
 		ComposeDown()
 
 		if dropDb, err := cmd.PersistentFlags().GetBool("drop-db"); err == nil {
@@ -32,19 +32,9 @@ var stopCmd = &cobra.Command{
 }
 
 func init() {
-	wordpressCmd.AddCommand(stopCmd)
-	laravelCmd.AddCommand(stopCmd)
-	djangoCmd.AddCommand(stopCmd)
+	rootCmd.AddCommand(stopCmd)
 
 	stopCmd.PersistentFlags().Bool("drop-db", config.Option.Stop.DropDb, "Share in the office")
-}
-
-func ComposeDown() {
-	err := exec.Command("docker-compose", "down").Run()
-	if err != nil {
-		color.Red("Could not stop docker-compose")
-		os.Exit(1)
-	}
 }
 
 func GetProjectName() string {
@@ -59,6 +49,14 @@ func GetProjectName() string {
 	pt := regexp.MustCompile("services:\n (.*):")
 	group := pt.FindSubmatch(b)
 	return strings.TrimSpace(string(group[1]))
+}
+
+func ComposeDown() {
+	err := exec.Command("docker-compose", "down").Run()
+	if err != nil {
+		color.Red("Could not stop docker-compose")
+		os.Exit(1)
+	}
 }
 
 func DropDB(project string, user string, password string) {
