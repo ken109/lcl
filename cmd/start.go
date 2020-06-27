@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/fatih/color"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"log"
