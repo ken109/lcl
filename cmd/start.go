@@ -53,7 +53,7 @@ func init() {
 	djangoCmd.AddCommand(startCmd)
 
 	startCmd.PersistentFlags().Bool("empty-only", config.Option.Start.EmptyOnly, "Stop processing if the current directory is not empty")
-	startCmd.PersistentFlags().Bool("share", false, "Share in the office")
+	startCmd.PersistentFlags().Bool("share", config.Option.Start.Share, "Share in the office")
 }
 
 func EmptyCheck(emptyOnly bool) {

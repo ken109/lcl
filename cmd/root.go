@@ -28,7 +28,7 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
+	initConfig()
 
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "",
 		fmt.Sprintf("config file (default is %s)", brewPrefix+"/etc/lcl/config.yaml"))
@@ -44,13 +44,13 @@ func initConfig() {
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println("config file Read error")
+		fmt.Println("Config file Read error")
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	if err := viper.Unmarshal(&config); err != nil {
-		fmt.Println("config file Unmarshal error")
+		fmt.Println("Config file Unmarshal error")
 		fmt.Println(err)
 		os.Exit(1)
 	}
