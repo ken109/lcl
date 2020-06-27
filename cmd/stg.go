@@ -62,7 +62,7 @@ func scp(project string) {
 
 func stg(framework string, project string) {
 	if err := exec.Command("bash", "-c",
-		"echo srv start "+framework+" "+project+" | ssh -t "+ssh).Run(); err != nil {
+		"echo stg start "+framework+" "+project+" | ssh -t "+ssh).Run(); err != nil {
 		color.Red("Could not start.")
 		os.Exit(1)
 	}
