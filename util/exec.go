@@ -34,8 +34,8 @@ func Pwd() string {
 }
 
 func Exists(name string) bool {
-	_, err := os.Stat(name)
-	return err == nil
+	f, err := os.Stat(name)
+	return !(os.IsNotExist(err) || f.IsDir())
 }
 
 func Remove(name string) {

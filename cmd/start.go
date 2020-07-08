@@ -7,7 +7,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/spf13/cobra"
 	"io/ioutil"
-	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -94,7 +93,8 @@ func copyCompose(path string, project string, share bool) string {
 	}
 	fc, err := os.Create("./docker-compose.yml")
 	if err != nil {
-		log.Fatal(err) //ファイルが開けなかったときエラー出力
+		color.Red("Could not read template")
+		os.Exit(1)
 	}
 	defer fc.Close()
 	fc.WriteString(compose)
