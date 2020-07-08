@@ -14,7 +14,8 @@ type Config struct {
 			DropDb bool `mapstructure:"drop-db"`
 		}
 		Staging struct {
-			Ssh string
+			Ssh    string
+			Domain string
 		}
 	}
 }

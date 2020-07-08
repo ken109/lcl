@@ -32,3 +32,15 @@ func Pwd() string {
 	}
 	return dir
 }
+
+func Exists(name string) bool {
+	f, err := os.Stat(name)
+	return !(os.IsNotExist(err) || f.IsDir())
+}
+
+func Remove(name string) {
+	if err := os.Remove(name); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+}

@@ -9,3 +9,4 @@ option:
     drop-db: false
   staging:
     ssh: a01
+    domain: example.jp
