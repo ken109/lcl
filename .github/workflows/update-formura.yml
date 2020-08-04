@@ -41,5 +41,5 @@ jobs:
           git config --global user.name "Kensuke Kubo"
           git add .
           git commit -m 'Formura ${{ steps.get_version.outputs.VERSION }}'
-          git remote set-url origin https://ken109:${{ secrets.GITHUB_TOKEN }}@github.com/ken109/homebrew-lcl.git
+          git remote set-url origin https://ken109:${{ secrets.ACCESS_TOKEN }}@github.com/ken109/homebrew-lcl.git
           git push origin master
