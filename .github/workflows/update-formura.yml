@@ -1,0 +1,25 @@
+name: Update Formura
+
+on:
+  push:
+    tags:
+      - '[0-9\.]+'
+
+jobs:
+  update-formura:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Checkout Formura Repo
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ken109/homebrew-lcl
+          path: formura
+
+      - name: Ls
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
