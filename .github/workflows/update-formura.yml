@@ -2,8 +2,8 @@ name: Update Formura
 
 on:
   push:
-#     tags:
-#       - '*'
+    tags:
+      - .*
 
 jobs:
   update-formura:
@@ -11,10 +11,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+
+      - name: Get SHA256
+        id: get_sha256
+        run: |
+          wget https://github.com/ken109/lcl/archive/${{ steps.get_version.outputs.VERSION }}.tar.gz
+          echo ::set-output name=SHA256::$(openssl dgst -r -SHA256 ${{ steps.get_version.outputs.VERSION }}.tar.gz | cut -d ' ' -f 1)
 
       - name: Checkout Formura Repo
         uses: actions/checkout@v2
@@ -23,7 +29,15 @@ jobs:
           repository: ken109/homebrew-lcl
           path: formura
 
-      - name: Ls
+      - name: Update Formura
         run: |
-          echo ${{ steps.get_version.outputs.VERSION }}
-          cat formura/templete.rb
+          sed s/+VIRSION+/${{ steps.get_version.outputs.VERSION }}/ ./formura/templete.rb > ./formura/lcl.rb
+          sed -i s/+SHA256+/${{ steps.get_sha256.outputs.SHA256 }}/ ./formura/lcl.rb
+
+      - name: Git Push
+        run: |
+          cd formura
+          git add .
+          git commit -m 'Formura ${{ steps.get_version.outputs.VERSION }}'
+          git remote set-url origin https://ken109:${{ secrets.GITHUB_TOKEN }}@github.com/ken109/homebrew-lcl.git
+          git push origin master
