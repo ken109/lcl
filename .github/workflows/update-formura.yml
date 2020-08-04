@@ -46,8 +46,7 @@ jobs:
           git commit -m 'Formura ${{ steps.get_version.outputs.VERSION }}'
       
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
-          directory: formura
-          repository: ken109/homebrew-lcl
+        run: |
+          cd formura
+          git remote set-url https://ken109:${{ secrets.ACCESS_TOKEN }}@github.com/ken109/homebrew-lcl.git
+          git push origin master
