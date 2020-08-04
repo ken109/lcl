@@ -31,7 +31,7 @@ jobs:
 
       - name: Update Formura
         run: |
-          sed s/+VIRSION+/${{ steps.get_version.outputs.VERSION }}/ ./formura/templete.rb > ./formura/lcl.rb
+          sed s/+VIRSION+/${{ steps.get_version.outputs.VERSION }}/ ./formura/templete > ./formura/lcl.rb
           sed -i s/+SHA256+/${{ steps.get_sha256.outputs.SHA256 }}/ ./formura/lcl.rb
 
       - name: Setup Git
