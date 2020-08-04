@@ -37,6 +37,8 @@ jobs:
       - name: Git Push
         run: |
           cd formura
+          git config --global user.email "kensukekubo19@gmail.com"
+          git config --global user.name "Kensuke Kubo"
           git add .
           git commit -m 'Formura ${{ steps.get_version.outputs.VERSION }}'
           git remote set-url origin https://ken109:${{ secrets.GITHUB_TOKEN }}@github.com/ken109/homebrew-lcl.git
