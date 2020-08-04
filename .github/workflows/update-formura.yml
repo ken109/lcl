@@ -2,8 +2,8 @@ name: Update Formura
 
 on:
   push:
-    tags:
-      - '*'
+#     tags:
+#       - '*'
 
 jobs:
   update-formura:
