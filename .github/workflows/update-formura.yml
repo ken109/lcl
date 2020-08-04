@@ -36,17 +36,20 @@ jobs:
 
       - name: Setup git repogitories
         run: |
-          echo "{{ secrets.DEPLOY_KEY }}" > ~/deploy_key.pem
-          chmod 600 ~/deploy_key.pem
           git config --global user.email "kensukekubo19@gmail.com"
           git config --global user.name "Kensuke Kubo"
           cd formura
           git remote set-url origin git@github.com:ken109/homebrew-lcl.git
-          git checkout master
         
-      - name: Push Formura
+      - name: Commit Changes
         run: |
           cd formura
           git add .
           git commit -m 'Formura ${{ steps.get_version.outputs.VERSION }}'
-          git push origin master
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          directory: formura
+          repository: ken109/homebrew-lcl
