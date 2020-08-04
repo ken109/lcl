@@ -46,6 +46,7 @@ jobs:
         
       - name: Push Formura
         run: |
+          cd formura
           git add .
           git commit -m 'Formura ${{ steps.get_version.outputs.VERSION }}'
           git push origin master
