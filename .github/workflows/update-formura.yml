@@ -25,7 +25,7 @@ jobs:
       - name: Checkout Formura Repo
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}
           repository: ken109/homebrew-lcl
           path: formura
 
@@ -34,12 +34,10 @@ jobs:
           sed s/+VIRSION+/${{ steps.get_version.outputs.VERSION }}/ ./formura/templete.rb > ./formura/lcl.rb
           sed -i s/+SHA256+/${{ steps.get_sha256.outputs.SHA256 }}/ ./formura/lcl.rb
 
-      - name: Setup git repogitories
+      - name: Setup Git
         run: |
           git config --global user.email "kensukekubo19@gmail.com"
           git config --global user.name "Kensuke Kubo"
-          cd formura
-          git remote set-url origin git@github.com:ken109/homebrew-lcl.git
         
       - name: Commit Changes
         run: |
@@ -48,8 +46,7 @@ jobs:
           git commit -m 'Formura ${{ steps.get_version.outputs.VERSION }}'
       
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
-          directory: formura
-          repository: ken109/homebrew-lcl
+        run: |
+          cd formura
+          git remote set-url https://ken109:${{ secrets.ACCESS_TOKEN }}@github.com/ken109/homebrew-lcl.git
+          git push origin master
