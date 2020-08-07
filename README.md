@@ -1,5 +1,6 @@
 # lclとは
 Laravel、WordPress、Djangoのローカル開発環境を容易に作成できるコマンドです。
+> <img width="500" alt="example" src="https://storage.googleapis.com/ken109-image/lcl-example.gif">
 
 # インストール
 1. Dockerをインストールする
