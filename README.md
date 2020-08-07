@@ -17,10 +17,8 @@
    brew cask install docker-toolbox
    ```
 
-2. 以下のアイコンからDockerを起動する
+2. 以下のアイコンからDockerを起動し、Dashboardを開く
 > <img width="150" alt="docker-icon" src="https://storage.googleapis.com/ken109-image/docker-icon.png">
-
-3. 以下をクリックしてDashboardを開く
 > <img width="150" alt="docker-open-dashboard" src="https://storage.googleapis.com/ken109-image/docker-open-dashboard.png">
 
 3. Dockerの`File Sharing`に`/usr/local/etc`を追加する
