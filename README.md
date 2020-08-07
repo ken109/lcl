@@ -18,9 +18,13 @@
    ```
 
 2. 以下のアイコンからDockerを起動する
-> <img width="150" alt="qiita-square" src="https://storage.googleapis.com/ken109-image/docker-icon.png">
+> <img width="150" alt="docker-icon" src="https://storage.googleapis.com/ken109-image/docker-icon.png">
+
+3. 以下をクリックしてDashboardを開く
+> <img width="150" alt="docker-open-dashboard" src="https://storage.googleapis.com/ken109-image/docker-open-dashboard.png">
 
 3. Dockerの`File Sharing`に`/usr/local/etc`を追加する
+> <img width="500" alt="docker-file-sharing" src="https://storage.googleapis.com/ken109-image/docker-file-sharing.png">
 
 4. インストール
    ```bash
