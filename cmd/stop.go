@@ -2,12 +2,13 @@ package cmd
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/fatih/color"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/ken109/lcl/util"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"os"
-	"os/exec"
 	"regexp"
 	"strings"
 )
@@ -52,7 +53,7 @@ func GetProjectName() string {
 }
 
 func ComposeDown() {
-	err := exec.Command("docker-compose", "down").Run()
+	err := util.TryCommand("docker-compose", "down")
 	if err != nil {
 		color.Red("Could not stop docker-compose")
 		os.Exit(1)
@@ -67,6 +68,7 @@ func DropDB(project string, user string, password string) {
 	defer db.Close()
 	_, err = db.Exec("DROP DATABASE IF EXISTS `" + project + "`")
 	if err != nil {
+		fmt.Println(err)
 		color.Red("Could not drop database")
 		os.Exit(1)
 	}

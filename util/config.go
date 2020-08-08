@@ -7,8 +7,8 @@ type Config struct {
 	}
 	Option struct {
 		Start struct {
-			EmptyOnly bool `mapstructure:"empty-only"`
-			Share     bool
+			NotEmpty bool `mapstructure:"not-empty"`
+			Share    bool
 		}
 		Stop struct {
 			DropDb bool `mapstructure:"drop-db"`

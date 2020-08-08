@@ -4,7 +4,6 @@ import (
 	"github.com/fatih/color"
 	"github.com/ken109/lcl/util"
 	"github.com/spf13/cobra"
-	"os/exec"
 )
 
 var baseStopCmd = &cobra.Command{
@@ -14,7 +13,7 @@ var baseStopCmd = &cobra.Command{
 		var dir = util.Pwd()
 		util.Cd(brewPrefix + "/etc/lcl/base")
 		color.Green("Stopping...")
-		if err := exec.Command("docker-compose", "down").Run(); err != nil {
+		if err := util.TryCommand("docker-compose", "down"); err != nil {
 			color.Red("Failed to stop.")
 		} else {
 			color.Green("Successfully stopped.")

@@ -3,10 +3,10 @@ mysql:
   password: password
 option:
   start:
-    empty-only: true
+    not-empty: false
     share: false
   stop:
     drop-db: false
   staging:
-    ssh: a01
+    ssh: example
     domain: example.jp

@@ -4,7 +4,6 @@ import (
 	"github.com/fatih/color"
 	"github.com/ken109/lcl/util"
 	"github.com/spf13/cobra"
-	"os/exec"
 )
 
 var baseStartCmd = &cobra.Command{
@@ -14,7 +13,7 @@ var baseStartCmd = &cobra.Command{
 		var dir = util.Pwd()
 		util.Cd(brewPrefix + "/etc/lcl/base")
 		color.Green("Starting...")
-		if err := exec.Command("docker-compose", "up", "-d").Run(); err != nil {
+		if err := util.TryCommand("docker-compose", "up", "-d"); err != nil {
 			color.Red("Failed to start.")
 		} else {
 			color.Green("Successfully started.")

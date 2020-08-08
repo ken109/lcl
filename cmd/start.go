@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/ken109/lcl/util"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"os"
@@ -14,7 +15,7 @@ import (
 	"strings"
 )
 
-var emptyOnly bool
+var notEmpty bool
 var share bool
 
 var startCmd = &cobra.Command{
@@ -28,13 +29,13 @@ var startCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(startCmd)
 
-	startCmd.PersistentFlags().BoolVar(&emptyOnly, "empty-only", config.Option.Start.EmptyOnly, "Stop processing if the current directory is not empty")
-	startCmd.PersistentFlags().BoolVar(&share, "share", config.Option.Start.Share, "Share in the office")
+	startCmd.PersistentFlags().BoolVar(&notEmpty, "not-empty", config.Option.Start.NotEmpty, "Execute even if the current directory is not empty")
+	startCmd.PersistentFlags().BoolVar(&share, "share", config.Option.Start.Share, "Share in the local network")
 }
 
 func start(framework string, project string) {
 	var host string
-	emptyCheck(emptyOnly)
+	emptyCheck(notEmpty)
 	color.Green("Copying docker-compose.yml...")
 	host = copyCompose(brewPrefix+"/etc/lcl/"+framework+".yml", project, share)
 	color.Green("Creating database...")
@@ -42,18 +43,18 @@ func start(framework string, project string) {
 
 	color.Green("Starting...")
 	composeUp()
-	color.Blue("URL: http://" + host)
+	color.Yellow("URL: http://" + host)
 	color.Green("Completed.")
 }
 
-func emptyCheck(emptyOnly bool) {
+func emptyCheck(notEmpty bool) {
 	var fileCount = 0
 	filepath.Walk("./", func(path string, info os.FileInfo, err error) error {
 		fileCount++
 		return nil
 	})
 
-	if fileCount > 1 && emptyOnly {
+	if fileCount > 1 && !notEmpty {
 		color.Red("Current directory is not empty.")
 		os.Exit(1)
 	}
@@ -94,6 +95,7 @@ func copyCompose(path string, project string, share bool) string {
 	fc, err := os.Create("./docker-compose.yml")
 	if err != nil {
 		color.Red("Could not read template")
+		fmt.Println(err)
 		os.Exit(1)
 	}
 	defer fc.Close()
@@ -110,13 +112,14 @@ func createDB(project string, user string, password string) {
 	defer db.Close()
 	_, err = db.Exec("CREATE DATABASE IF NOT EXISTS `" + project + "`")
 	if err != nil {
+		fmt.Println(err)
 		color.Red("Could not create database")
 		os.Exit(1)
 	}
 }
 
 func composeUp() {
-	err := exec.Command("docker-compose", "up", "-d", "--remove-orphans").Run()
+	err := util.TryCommand("docker-compose", "up", "-d", "--remove-orphans")
 	if err != nil {
 		color.Red("Could not start docker-compose")
 		os.Exit(1)
