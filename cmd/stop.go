@@ -18,7 +18,7 @@ var stopCmd = &cobra.Command{
 	Short: "Stop environment",
 	Run: func(cmd *cobra.Command, args []string) {
 		project := GetProjectName()
-		color.Green(" Stopping " + project + "...")
+		color.Green("Stopping " + project + "...")
 		ComposeDown()
 
 		if dropDb, err := cmd.PersistentFlags().GetBool("drop-db"); err == nil {
