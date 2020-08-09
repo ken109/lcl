@@ -86,12 +86,11 @@ func copyCompose(path string, project string, share bool) string {
 		}
 
 		var ip = strings.Split(string(group[1]), ".")
-		compose = strings.ReplaceAll(compose, "HOST_NAME", project+"-"+ip[2]+ip[3])
-		host = project + "-" + ip[2] + ip[3]
+		host = project + "-" + ip[2] + "-" + ip[3]
 	} else {
-		compose = strings.ReplaceAll(compose, "HOST_NAME", project)
 		host = project
 	}
+	compose = strings.ReplaceAll(compose, "HOST_NAME", host)
 	fc, err := os.Create("./docker-compose.yml")
 	if err != nil {
 		color.Red("Could not read template")
