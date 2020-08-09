@@ -8,7 +8,7 @@ import (
 
 var updateCmd = &cobra.Command{
 	Use:   "update",
-	Short: "Update docker images",
+	Short: "Update lcl docker images",
 	Run: func(cmd *cobra.Command, args []string) {
 		color.Green("Updating...")
 
