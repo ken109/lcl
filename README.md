@@ -19,12 +19,14 @@ Laravel、WordPress、Djangoのローカル開発環境を容易に作成でき�
 4. インストール
    ```bash
    brew install ken109/tap/lcl
+   lcl init
    ```
 
 5. DNSサーバーの先頭に127.0.0.1を追加する
 
 # lclコマンドの使い方
 * lcl
+  * init
   * update
   * [base](https://github.com/ken109/lcl/wiki/Base)
     * [start](https://github.com/ken109/lcl/wiki/Base#%E3%83%99%E3%83%BC%E3%82%B9%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E8%B5%B7%E5%8B%95)
