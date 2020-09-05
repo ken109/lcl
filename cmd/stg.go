@@ -5,7 +5,6 @@ import (
 	"github.com/ken109/lcl/util"
 	"github.com/spf13/cobra"
 	"os"
-	"os/exec"
 )
 
 var ssh string
@@ -47,22 +46,22 @@ func staging(framework string, keyFile string, project string) {
 }
 
 func tar(project string) {
-	if err := exec.Command("bash", "-c", "tar acf "+project+".tar.gz ./*").Run(); err != nil {
+	if err := util.TryCommand("bash", "-c", "tar acf srv-"+project+".tar.gz ./*"); err != nil {
 		color.Red("Could not create archive.")
 		os.Exit(1)
 	}
 }
 
 func scp(project string) {
-	if err := exec.Command("scp", project+".tar.gz", ssh+":~/.tmp").Run(); err != nil {
+	if err := util.TryCommand("scp", "srv-"+project+".tar.gz", ssh+":/tmp"); err != nil {
 		color.Red("Could not transfer.")
 		os.Exit(1)
 	}
 }
 
 func stg(framework string, project string) {
-	if err := exec.Command("bash", "-c",
-		"echo srv start "+framework+" "+project+" | ssh -t "+ssh).Run(); err != nil {
+	if err := util.TryCommand("bash", "-c",
+		"echo srv start "+framework+" "+project+" | ssh -t "+ssh); err != nil {
 		color.Red("Could not start.")
 		os.Exit(1)
 	}
