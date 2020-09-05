@@ -5,6 +5,7 @@ import (
 	"github.com/ken109/lcl/util"
 	"github.com/spf13/cobra"
 	"os"
+	"strings"
 )
 
 var ssh string
@@ -40,20 +41,26 @@ func staging(framework string, keyFile string, project string) {
 	scp(project)
 	color.Green("Starting...")
 	stg(framework, project)
-	util.Remove(project + ".tar.gz")
+	util.Remove("../srv-" + project + ".tar.gz")
 	color.Blue("URL: https://" + project + "." + domain)
 	color.Green("Completed.")
 }
 
 func tar(project string) {
-	if err := util.TryCommand("bash", "-c", "tar acf srv-"+project+".tar.gz ./*"); err != nil {
+	pwd := strings.Split(util.Pwd(), "/")
+	wd := pwd[len(pwd)-1]
+
+	util.Cd("..")
+	if err := util.TryCommand("bash", "-c", "tar acf srv-"+project+".tar.gz -C "+wd+" ."); err != nil {
 		color.Red("Could not create archive.")
+		util.Cd(wd)
 		os.Exit(1)
 	}
+	util.Cd(wd)
 }
 
 func scp(project string) {
-	if err := util.TryCommand("scp", "srv-"+project+".tar.gz", ssh+":/tmp"); err != nil {
+	if err := util.TryCommand("scp", "../srv-"+project+".tar.gz", ssh+":/tmp"); err != nil {
 		color.Red("Could not transfer.")
 		os.Exit(1)
 	}
@@ -61,7 +68,7 @@ func scp(project string) {
 
 func stg(framework string, project string) {
 	if err := util.TryCommand("bash", "-c",
-		"echo srv start "+framework+" "+project+" | ssh -t "+ssh); err != nil {
+		"echo srv stg "+framework+" "+project+" | ssh -t "+ssh); err != nil {
 		color.Red("Could not start.")
 		os.Exit(1)
 	}
