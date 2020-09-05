@@ -48,5 +48,5 @@ jobs:
       - name: Push changes
         run: |
           cd formura
-          git remote set-url origin https://ken109:${{ secrets.ACCESS_TOKEN }}@github.com/ken109/homebrew-lcl.git
+          git remote set-url origin https://ken109:${{ secrets.ACCESS_TOKEN }}@github.com/ken109/homebrew-tap.git
           git push origin master
