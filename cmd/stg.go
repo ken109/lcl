@@ -31,8 +31,8 @@ func staging(framework string, keyFile string, project string) {
 		color.Red("Current directory is not a " + framework + " project.")
 		os.Exit(1)
 	}
-	if util.Exists(project + ".tar.gz") {
-		util.Remove(project + ".tar.gz")
+	if util.Exists("srv-" + project + ".tar.gz") {
+		util.Remove("srv-" + project + ".tar.gz")
 	}
 	color.Green("Compressing...")
 	tar(project)
