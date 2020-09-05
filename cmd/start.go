@@ -106,13 +106,13 @@ func copyCompose(path string, project string, share bool) string {
 func createDB(project string, user string, password string) {
 	db, err := sql.Open("mysql", user+":"+password+"@tcp(127.0.0.1:3306)/")
 	if err != nil {
-		panic(err.Error())
+		color.Red("データベースに接続できませんでした")
+		os.Exit(1)
 	}
 	defer db.Close()
 	_, err = db.Exec("CREATE DATABASE IF NOT EXISTS `" + project + "`")
 	if err != nil {
-		fmt.Println(err)
-		color.Red("Could not create database")
+		color.Red("データベースを作成できませんでした。")
 		os.Exit(1)
 	}
 }

@@ -28,10 +28,9 @@ func Execute() {
 }
 
 func init() {
-	initConfig()
-
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "",
 		fmt.Sprintf("config file (default is %s)", brewPrefix+"/etc/lcl/config.yml"))
+	cobra.OnInitialize(initConfig)
 }
 
 func initConfig() {

@@ -19,6 +19,7 @@ func GetOutput(name string, arg ...string) string {
 
 func TryCommand(name string, arg ...string) error {
 	cmd := exec.Command(name, arg...)
+	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
