@@ -13,7 +13,9 @@ var baseStartCmd = &cobra.Command{
 		var dir = util.Pwd()
 		util.Cd(brewPrefix + "/etc/lcl/base")
 		color.Green("Starting...")
-		if err := util.TryCommand("docker-compose", "up", "-d"); err != nil {
+
+		composeArgs := append([]string{"up", "-d"}, args...)
+		if err := util.TryCommand("docker-compose", composeArgs...); err != nil {
 			color.Red("Failed to start.")
 		} else {
 			color.Green("Successfully started.")
