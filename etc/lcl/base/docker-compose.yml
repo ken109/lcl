@@ -9,8 +9,8 @@ services:
       - ./hosts.txt:/usr/src/app/hosts.txt
       - ./resolver.txt:/usr/src/app/resolver.txt
     restart: always
-  
-  nginx-proxy:
+
+  nginx:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
     ports:
