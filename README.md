@@ -6,7 +6,6 @@ Laravel、WordPress、Djangoのローカル開発環境を容易に作成でき�
 1. Dockerをインストールする
    ```bash
    brew cask install docker
-   brew cask install docker-toolbox
    ```
 
 2. 以下のアイコンからDockerを起動し、Dashboardを開く
