@@ -51,6 +51,13 @@ services:
       - '6379:6379'
     restart: always
 
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    restart: always
+
 networks:
   default:
     external:
