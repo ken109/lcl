@@ -15,6 +15,7 @@ var initCmd = &cobra.Command{
 		_ = util.TryCommand("docker", "network", "create", "develop")
 		_ = util.TryCommand("docker", "volume", "create", "mysql")
 		_ = util.TryCommand("docker", "volume", "create", "mysql5")
+		_ = util.TryCommand("docker", "volume", "create", "mongo")
 		_ = util.TryCommand("docker", "pull", "ken109/dns:latest")
 		_ = util.TryCommand("docker", "pull", "ken109/django:latest")
 		_ = util.TryCommand("docker", "pull", "ken109/laravel:latest")

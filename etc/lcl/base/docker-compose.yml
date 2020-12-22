@@ -57,6 +57,8 @@ services:
     ports:
       - '27017:27017'
     restart: always
+    volumes:
+      - mongo:/data/db
 
 networks:
   default:
@@ -67,4 +69,6 @@ volumes:
   mysql:
     external: true
   mysql5:
+    external: true
+  mongo:
     external: true
