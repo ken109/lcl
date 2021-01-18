@@ -19,7 +19,7 @@ Laravel、WordPress、Djangoのローカル開発環境を容易に作成でき�
    ```bash
    brew install ken109/tap/lcl
    lcl init
-   lcl base start
+   lcl base start [mysql, mysql5, dns, nginx, mongo, redis]
    ```
 
 5. DNSサーバーの先頭に127.0.0.1を追加する
