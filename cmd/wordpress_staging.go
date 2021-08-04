@@ -2,13 +2,14 @@ package cmd
 
 import (
 	"errors"
+
 	"github.com/spf13/cobra"
 )
 
-var laStgCmd = &cobra.Command{
-	Use:     "la [project name]",
-	Aliases: []string{"laravel"},
-	Short:   "laravel: staging",
+var wpStgCmd = &cobra.Command{
+	Use:     "wp [project name]",
+	Aliases: []string{"wordpress"},
+	Short:   "wordpress: staging",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
 			return errors.New("requires a project name argument")
@@ -16,10 +17,10 @@ var laStgCmd = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		staging("laravel", "artisan", args[0])
+		staging("wordpress", "wp-settings.php", args[0])
 	},
 }
 
 func init() {
-	stgCmd.AddCommand(laStgCmd)
+	stgCmd.AddCommand(wpStgCmd)
 }

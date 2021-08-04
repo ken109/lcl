@@ -2,13 +2,14 @@ package cmd
 
 import (
 	"errors"
+
 	"github.com/spf13/cobra"
 )
 
-var p7StgCmd = &cobra.Command{
-	Use:     "p7 [project name]",
-	Aliases: []string{"php7"},
-	Short:   "php7: staging",
+var laStgCmd = &cobra.Command{
+	Use:     "la [project name]",
+	Aliases: []string{"laravel"},
+	Short:   "laravel: staging",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
 			return errors.New("requires a project name argument")
@@ -16,10 +17,10 @@ var p7StgCmd = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		staging("php7", "index.php", args[0])
+		staging("laravel", "artisan", args[0])
 	},
 }
 
 func init() {
-	stgCmd.AddCommand(p7StgCmd)
+	stgCmd.AddCommand(laStgCmd)
 }

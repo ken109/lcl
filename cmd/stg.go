@@ -1,11 +1,12 @@
 package cmd
 
 import (
+	"os"
+	"strings"
+
 	"github.com/fatih/color"
 	"github.com/ken109/lcl/util"
 	"github.com/spf13/cobra"
-	"os"
-	"strings"
 )
 
 var ssh string
@@ -67,8 +68,10 @@ func scp(project string) {
 }
 
 func stg(framework string, project string) {
-	if err := util.TryCommand("bash", "-c",
-		"echo srv stg "+framework+" "+project+" | ssh -t "+ssh); err != nil {
+	if err := util.TryCommand(
+		"bash", "-c",
+		"echo srv stg "+framework+" "+project+" | ssh -t "+ssh,
+	); err != nil {
 		color.Red("Could not start.")
 		os.Exit(1)
 	}

@@ -2,10 +2,11 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/ken109/lcl/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"os"
 )
 
 var cfgFile string
@@ -28,8 +29,6 @@ func Execute() {
 }
 
 func init() {
-	//rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "",
-	//	fmt.Sprintf("config file (default: %s)", brewPrefix+"/etc/lcl/config.yml"))
 	initConfig()
 }
 

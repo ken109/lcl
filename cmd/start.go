@@ -3,16 +3,17 @@ package cmd
 import (
 	"database/sql"
 	"fmt"
-	"github.com/fatih/color"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/ken109/lcl/util"
-	"github.com/spf13/cobra"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"github.com/fatih/color"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/ken109/lcl/util"
+	"github.com/spf13/cobra"
 )
 
 var notEmpty bool
@@ -29,7 +30,12 @@ var startCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(startCmd)
 
-	startCmd.PersistentFlags().BoolVar(&notEmpty, "not-empty", config.Option.Start.NotEmpty, "Execute even if the current directory is not empty")
+	startCmd.PersistentFlags().BoolVar(
+		&notEmpty,
+		"not-empty",
+		config.Option.Start.NotEmpty,
+		"Execute even if the current directory is not empty",
+	)
 	startCmd.PersistentFlags().BoolVar(&share, "share", config.Option.Start.Share, "Share in the local network")
 }
 
@@ -49,10 +55,12 @@ func start(framework string, project string) {
 
 func emptyCheck(notEmpty bool) {
 	var fileCount = 0
-	filepath.Walk("./", func(path string, info os.FileInfo, err error) error {
-		fileCount++
-		return nil
-	})
+	filepath.Walk(
+		"./", func(path string, info os.FileInfo, err error) error {
+			fileCount++
+			return nil
+		},
+	)
 
 	if fileCount > 1 && !notEmpty {
 		color.Red("Current directory is not empty.")

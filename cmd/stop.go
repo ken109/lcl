@@ -3,14 +3,15 @@ package cmd
 import (
 	"database/sql"
 	"fmt"
-	"github.com/fatih/color"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/ken109/lcl/util"
-	"github.com/spf13/cobra"
 	"io/ioutil"
 	"os"
 	"regexp"
 	"strings"
+
+	"github.com/fatih/color"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/ken109/lcl/util"
+	"github.com/spf13/cobra"
 )
 
 var stopCmd = &cobra.Command{

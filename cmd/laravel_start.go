@@ -2,13 +2,14 @@ package cmd
 
 import (
 	"errors"
+
 	"github.com/spf13/cobra"
 )
 
-var djStgCmd = &cobra.Command{
-	Use:     "dj [project name]",
-	Aliases: []string{"django"},
-	Short:   "django: staging",
+var laStartCmd = &cobra.Command{
+	Use:     "la [project name]",
+	Aliases: []string{"laravel"},
+	Short:   "laravel: start",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
 			return errors.New("requires a project name argument")
@@ -16,10 +17,10 @@ var djStgCmd = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		staging("django", "manage.py", args[0])
+		start("laravel", args[0])
 	},
 }
 
 func init() {
-	stgCmd.AddCommand(djStgCmd)
+	startCmd.AddCommand(laStartCmd)
 }

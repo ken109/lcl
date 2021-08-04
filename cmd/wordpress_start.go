@@ -2,13 +2,14 @@ package cmd
 
 import (
 	"errors"
+
 	"github.com/spf13/cobra"
 )
 
-var p5StgCmd = &cobra.Command{
-	Use:     "p5 [project name]",
-	Aliases: []string{"php5"},
-	Short:   "php5: staging",
+var wpStartCmd = &cobra.Command{
+	Use:     "wp [project name]",
+	Aliases: []string{"wordpress"},
+	Short:   "wordpress: start",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
 			return errors.New("requires a project name argument")
@@ -16,10 +17,10 @@ var p5StgCmd = &cobra.Command{
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		staging("php5", "index.php", args[0])
+		start("wordpress", args[0])
 	},
 }
 
 func init() {
-	stgCmd.AddCommand(p5StgCmd)
+	startCmd.AddCommand(wpStartCmd)
 }
