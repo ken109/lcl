@@ -25,7 +25,7 @@ jobs:
       - name: Checkout Formura Repo
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           repository: ken109/homebrew-tap
           path: formura
 
@@ -48,5 +48,5 @@ jobs:
       - name: Push changes
         run: |
           cd formura
-          git remote set-url origin https://ken109:${{ secrets.ACCESS_TOKEN }}@github.com/ken109/homebrew-tap.git
+          git remote set-url origin https://ken109:${{ secrets.GITHUB_TOKEN }}@github.com/ken109/homebrew-tap.git
           git push origin master
